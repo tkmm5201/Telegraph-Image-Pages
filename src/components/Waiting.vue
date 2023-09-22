@@ -1,14 +1,14 @@
 <template>
   <div class="waiting">
     <el-upload
-        class="upload-drag"
-        :show-file-list="false"
-        drag
-        action="/upload"
-        :accept="accept"
-        :before-upload="onBeforeUpload"
-        :on-success="onSuccess"
-        :on-error="onError"
+      class="upload-drag"
+      :show-file-list="false"
+      drag
+      action="/upload"
+      :accept="accept"
+      :before-upload="onBeforeUpload"
+      :on-success="onSuccess" 
+      :on-error="onError"
     >
       <div class="svg-wrapper">
         <div class="svg-box">
@@ -18,18 +18,28 @@
           </svg>
         </div>
       </div>
+      
       <div class="text-area">
         <span>
-          可直接截图并粘贴或拖拽到这里，仅限gif、jpeg、jpg、png，图片限制5M以内
+          可直接截图并粘贴或拖拽到这里,仅限gif、jpeg、jpg、png,图片限制5M以内
         </span>
       </div>
+      
       <div class="upload-btn">
         <el-button class="ml-3" round type="primary">
-          选择上传图片
+          选择上传图片  
         </el-button>
       </div>
     </el-upload>
+    
     <div class="advanced" @click.stop>
+      <el-tooltip
+        effect="light"
+        content="图片大小超过限制会自动进行压缩"
+        placement="top-start"
+      >
+        <el-checkbox class="compress" v-model="compress" size="small" checked @click.stop>压缩图片</el-checkbox> 
+      </el-tooltip>
     </div>
   </div>
 </template>
@@ -44,6 +54,7 @@ import { compressFile } from "../utils/compressFile"
 const accept = ['gif','jpeg','jpg','png'].map(type => `image/${type}`).join(',')
 const emit  = defineEmits(["change"])
 const MAX_SIZE = 5 *  1024 * 1024
+const compress = ref(true)
 const props = defineProps({
   show: {
     type: Boolean,
@@ -51,8 +62,8 @@ const props = defineProps({
   }
 })
 
-const onBeforeUpload = async (raw) => {
-  let result = await compressFile(raw)
+const onBeforeUpload = async (raw: any) => {
+  let result = raw
   if(raw.size > MAX_SIZE){
     if(!compress.value){
       ElMessage.error('图片大小不能超过 5MB！')
