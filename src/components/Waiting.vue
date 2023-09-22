@@ -20,7 +20,7 @@
       </div>
       <div class="text-area">
         <span>
-          可直接截图并粘贴或拖拽到这里，仅限gif、jpeg、jpg、png，图片限制5M以内
+          可直接截图并粘贴或拖拽到这里，仅限gif、jpeg、jpg、png、webp，图片限制5M以内
         </span>
       </div>
       <div class="upload-btn">
@@ -48,7 +48,7 @@ import {ref, watch} from "vue";
 import {usePaste} from "../hooks/usePaste";
 import {postUpload} from "../api";
 import { compressFile } from "../utils/compressFile"
-const accept = ['gif','jpeg','jpg','png'].map(type => `image/${type}`).join(',')
+const accept = ['gif','jpeg','jpg','png','webp'].map(type => `image/${type}`).join(',')
 const emit  = defineEmits(["change"])
 const MAX_SIZE = 5 *  1024 * 1024
 const compress = ref(false)
