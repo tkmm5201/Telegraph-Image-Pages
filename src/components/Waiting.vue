@@ -61,7 +61,7 @@ const props = defineProps({
 
 const onBeforeUpload = async (raw: any) => {
   // ...
-}; // 添加分号
+}; // 添加分号0
 
 const onSuccess = (response: any) => {
   // ...
