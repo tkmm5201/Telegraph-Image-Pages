@@ -59,13 +59,13 @@ const props = defineProps({
   }
 })
 
-const onBeforeUpload = async (raw) => {
-  let result = await compressFile(raw);
+const onBeforeUpload = async (raw: any) => {
+  // ...
+}; // 添加分号
 
-  emit("change", STATUS.UPLOADING);
-
-  return result;
-}
+const onSuccess = (response: any) => {
+  // ...
+} // 改为函数代码块格式
   }
   emit("change", STATUS.UPLOADING)
   return result
