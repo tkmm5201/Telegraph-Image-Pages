@@ -59,8 +59,11 @@ const props = defineProps({
   }
 })
 
-if(raw.size > MAX_SIZE && compress.value){
+const onBeforeUpload = async (raw: any) => {
+  let result: any = raw;
+  if(raw.size > MAX_SIZE && compress.value){
   result =  await compressFile(raw)
+}
 }
 const onSuccess = (response:any) => {
   setTimeout(() => {
