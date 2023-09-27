@@ -60,10 +60,17 @@ const props = defineProps({
 })
 
 const onBeforeUpload = async (raw: any) => {
-  let result: any = raw;
-  if(raw.size > MAX_SIZE && compress.value){
-  result =  await compressFile(raw)
-}
+  let result = raw
+  if(raw.size > MAX_SIZE){
+    if(!compress.value){
+      ElMessage.error('图片大小不能超过 5MB！')
+      return false
+    }else{
+      result =  await compressFile(raw)
+    }
+  }
+  emit("change", STATUS.UPLOADING)
+  return result
 }
 const onSuccess = (response:any) => {
   setTimeout(() => {
