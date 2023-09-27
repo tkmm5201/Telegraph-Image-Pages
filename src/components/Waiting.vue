@@ -50,7 +50,7 @@ import {postUpload} from "../api";
 import { compressFile } from "../utils/compressFile"
 const accept = ['gif','jpeg','jpg','png'].map(type => `image/${type}`).join(',')
 const emit  = defineEmits(["change"])
-const MAX_SIZE = 20 * 1024 * 1024
+const MAX_SIZE = 5 * 1024 * 1024
 const compress = ref(true)
 const props = defineProps({
   show: {
