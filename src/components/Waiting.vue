@@ -61,7 +61,7 @@ const props = defineProps({
     default: true
   }
 })
-
+import { compressImage } from "../utils/compressImage";
 const onBeforeUpload = async (raw: any) => {
   try {
     const compressedFile = await compressImage(raw); // 使用压缩函数对图片进行压缩
