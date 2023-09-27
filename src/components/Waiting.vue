@@ -61,22 +61,26 @@ const props = defineProps({
     default: true
   }
 })
-import { compressImage } from "../utils/compressImage";
+
 const onBeforeUpload = async (raw: any) => {
-  try {
-    const compressedFile = await compressImage(raw); // 使用压缩函数对图片进行压缩
-    if (compressedFile.size > MAX_SIZE) {
-      ElMessage.error('图片大小不能超过 5MB！');
-      return false;
+  let result = raw
+  if(raw.size > MAX_SIZE){
+    if(!compress.value){
+      ElMessage.error('图片大小不能超过 5MB！')
+      return false
+    }else{
+      result =  await compressFile(raw)
     }
-    emit("change", STATUS.UPLOADING);
-    return compressedFile;
-  } catch (error) {
-    console.error("压缩图片时出错：", error);
-    ElMessage.error('图片压缩时出错！');
-    return false;
   }
-};
+  emit("change", STATUS.UPLOADING)
+  return result
+}
+const onSuccess = (response:any) => {
+  setTimeout(() => {
+    emit("change", STATUS.DONE, response)
+  },200)
+}
+
 const onSuccess = (response:any) => {
   setTimeout(() => {
     emit("change", STATUS.DONE, response)
