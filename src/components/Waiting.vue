@@ -1,14 +1,14 @@
 <template>
   <div class="waiting">
     <el-upload
-      class="upload-drag"
-      :show-file-list="false"
-      drag
-      action="/upload"
-      :accept="accept"
-      :before-upload="onBeforeUpload"
-      :on-success="onSuccess" 
-      :on-error="onError"
+        class="upload-drag"
+        :show-file-list="false"
+        drag
+        action="/upload"
+        :accept="accept"
+        :before-upload="onBeforeUpload"
+        :on-success="onSuccess"
+        :on-error="onError"
     >
       <div class="svg-wrapper">
         <div class="svg-box">
@@ -18,27 +18,24 @@
           </svg>
         </div>
       </div>
-      
       <div class="text-area">
         <span>
-          可直接截图并粘贴或拖拽到这里,仅限gif、jpeg、jpg、png,图片限制5M以内
+          可直接截图并粘贴或拖拽到这里，仅限gif、jpeg、jpg、png，图片限制5M以内
         </span>
       </div>
-      
       <div class="upload-btn">
         <el-button class="ml-3" round type="primary">
-          选择上传图片  
+          选择上传图片
         </el-button>
       </div>
     </el-upload>
-    
     <div class="advanced" @click.stop>
       <el-tooltip
-        effect="light"
-        content="图片大小超过限制会自动进行压缩"
-        placement="top-start"
+          effect="light"
+          content="图片大小超过限制会自动进行压缩"
+          placement="top-start"
       >
-        <el-checkbox class="compress" v-model="compress" size="small" checked @click.stop>压缩图片</el-checkbox> 
+        <el-checkbox class="compress" v-model="compress" size="small"  @click.stop>压缩图片</el-checkbox>
       </el-tooltip>
     </div>
   </div>
@@ -62,25 +59,9 @@ const props = defineProps({
   }
 })
 
-const onBeforeUpload = async (raw: any) => {
-  let result = raw
-  if(raw.size > MAX_SIZE){
-    if(!compress.value){
-      ElMessage.error('图片大小不能超过 5MB！')
-      return false
-    }else{
-      result =  await compressFile(raw)
-    }
-  }
-  emit("change", STATUS.UPLOADING)
-  return result
+if(raw.size > MAX_SIZE && compress.value){
+  result =  await compressFile(raw)
 }
-const onSuccess = (response:any) => {
-  setTimeout(() => {
-    emit("change", STATUS.DONE, response)
-  },200)
-}
-
 const onSuccess = (response:any) => {
   setTimeout(() => {
     emit("change", STATUS.DONE, response)
