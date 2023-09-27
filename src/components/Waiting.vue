@@ -50,7 +50,7 @@ import {postUpload} from "../api";
 import { compressFile } from "../utils/compressFile"
 const accept = ['gif','jpeg','jpg','png'].map(type => `image/${type}`).join(',')
 const emit  = defineEmits(["change"])
-const MAX_SIZE = 5 *  1024 * 1024
+const MAX_SIZE = 20 * 1024 * 1024
 const compress = ref(true)
 const props = defineProps({
   show: {
@@ -63,7 +63,7 @@ const onBeforeUpload = async (raw: any) => {
   let result = raw
   if(raw.size > MAX_SIZE){
     if(!compress.value){
-      ElMessage.error('图片大小不能超过 5MB！')
+      ElMessage.error('图片大小不能超过 200MB！')
       return false
     }else{
       result =  await compressFile(raw)
