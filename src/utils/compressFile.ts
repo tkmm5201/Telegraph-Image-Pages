@@ -3,7 +3,7 @@ import imageCompression from 'browser-image-compression';
 export function compressFile(imageFile: any) {
     const options = {
         maxSizeMB: 5,
-        maxWidthOrHeight: 1920,
+        maxWidthOrHeight: 3840,
         useWebWorker: true
     }
     return new Promise((resolve, reject) => {
